@@ -118,6 +118,15 @@ module SalsaLabs
   # Deals with weird capitalization
   ##
   class ApiObjectParameterList
+    SUPPORTER_STANDARD_FIELDS = %w(supporter_key organization_key chapter_key last_modified date_created title
+                                   first_name mi last_name suffix email password receive_email email_status
+                                   email_preference soft_bounce_count hard_bounce_count last_bounce
+                                   receive_phone_blasts phone cell_phone phone_provider work_phone pager home_fax
+                                   work_fax street street_2 street_3 city state zip private_zip_plus_4 county district
+                                   country latitude longitude organization department occupation
+                                   instant_messenger_service instant_messenger_name web_page alternative_email
+                                   other_data_1 other_data_2 other_data_3 notes source source_details
+                                   source_tracking_code tracking_code status uid timezone language_code).freeze
 
     def initialize(attributes)
       @attributes = attributes
@@ -149,6 +158,9 @@ module SalsaLabs
           parts = key.split('_')
           last_parts = parts[1..-1].map{|part| part.capitalize}
           capitalized_key = [parts.first.upcase,last_parts].join('_')
+        elsif !SUPPORTER_STANDARD_FIELDS.include?(key)
+          # custom fields are always snake_case
+          capitalized_key = key
         else
           #all others are capitalized normally
           capitalized_key = (key.split('_').map {|part| part.capitalize}).join('_')

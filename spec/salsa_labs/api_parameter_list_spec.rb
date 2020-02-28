@@ -18,7 +18,8 @@ describe SalsaLabs::ApiObjectParameterList do
       'last_name' => 'Jingleheimer Schmidt',
       'suffix' => 'IV',
       'zip' => '12345',
-      'private_zip_plus_4' => '0000'
+      'private_zip_plus_4' => '0000',
+      'custom_field_123' => '456'
     })
   end
 
@@ -33,6 +34,8 @@ describe SalsaLabs::ApiObjectParameterList do
       expect(api_parameters.attributes['uid']).to eq('')
       expect(api_parameters.attributes).to include('tag')
       expect(api_parameters.attributes['tag']).to eq('a_tag')
+      expect(api_parameters.attributes).to include('custom_field_123')
+      expect(api_parameters.attributes['custom_field_123']).to eq('456')
 
       #ends with _KEY
       expect(api_parameters.attributes).to include('supporter_KEY')
