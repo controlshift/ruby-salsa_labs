@@ -10,7 +10,7 @@ module SalsaLabs
 
     def save(data)
       parameters = SalsaLabs::ApiObjectParameterList.new(data)
-      filtered_params = parameters.attributes.delete_if { |key, value| key == 'Date_Created'}
+      filtered_params = parameters.attributes.delete_if { |key, value| ['Date_Created', 'Last_Modified'].include?(key) }
         
       response = parse_response(api_call(filtered_params))
 
