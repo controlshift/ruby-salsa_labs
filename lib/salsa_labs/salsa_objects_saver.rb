@@ -3,6 +3,10 @@ module SalsaLabs
   # Service object to save an object or a collection of objects to the Salsa Labs API.
   ##
   class SalsaObjectsSaver
+    PARAMS_TO_SKIP = ['Date_Created',  # Not allowed to be changed
+                      'Last_Modified',  # Not allowed to be changed
+                      'organization_KEY'  # Comes from authorization, but not something we ever set
+    ].freeze
 
     def initialize(credentials = {})
       @client = SalsaLabs::ApiClient.new(credentials)
@@ -10,7 +14,9 @@ module SalsaLabs
 
     def save(data)
       parameters = SalsaLabs::ApiObjectParameterList.new(data)
-      filtered_params = parameters.attributes.delete_if { |key, value| ['Date_Created', 'Last_Modified'].include?(key) }
+
+      # Filter out parameters that should not be included
+      filtered_params = parameters.attributes.delete_if { |key, value| PARAMS_TO_SKIP.include?(key) }
 
       # 'object' must go first, followed by 'key' if it exists
       ordered_params = {'object' => filtered_params.delete('object')}

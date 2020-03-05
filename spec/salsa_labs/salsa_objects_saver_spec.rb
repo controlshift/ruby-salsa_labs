@@ -45,7 +45,6 @@ describe SalsaLabs::SalsaObjectsSaver do
     let(:expected_data) do
       {
         'supporter_KEY' => '31337',
-        'organization_KEY' => '1234',
         'chapter_KEY' => '90210',
         'Title' => 'Mr.',
         'First_Name' => 'John',
