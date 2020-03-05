@@ -24,12 +24,15 @@ describe SalsaLabs::SalsaObjectsSaver do
         'suffix' => 'IV',
         'email' => 'johnjacob@example.com',
         'receive_email' => 1,
+        'receive_phone_blasts' => false,
+        'receive_phone_blasts_boolvalue' => false,
         'phone' => '1234567890',
         'street' => '123 Main St',
         'street_2' => 'Apt 404',
         'city' => 'Schnechtady',
         'state' => 'NY',
         'zip' => '12345',
+        'private_zip_plus_4' => '1111',
         'country' => 'USA',
         'source' => 'rspec',
         'status' => 'Active',
@@ -38,6 +41,11 @@ describe SalsaLabs::SalsaObjectsSaver do
         'tracking_code' => 'abc123',
         'date_created' => 'Fri Mar 14 2014 14:07:29 GMT-0400 (EDT)',
         'last_modified' => 'Fri Mar 14 2014 13:54:10 GMT-0400 (EDT)',
+        'district' => 'N/A',
+        'language_code' => 'eng',
+        'salsa_deleted' => false,
+        'salsa_deleted_boolvalue' => false,
+        'text' => 'asdf',
         'some_custom_field' => 'foo'
       }
     end
@@ -53,13 +61,17 @@ describe SalsaLabs::SalsaObjectsSaver do
         'Suffix' => 'IV',
         'Email' => 'johnjacob@example.com',
         'Receive_Email' => 1,
+        'Receive_Phone_Blasts' => 0,
         'Phone' => '1234567890',
         'Street' => '123 Main St',
         'Street_2' => 'Apt 404',
         'City' => 'Schnechtady',
         'State' => 'NY',
         'Zip' => '12345',
+        'PRIVATE_Zip_Plus_4' => '1111',
+        'District' => 'N/A',
         'Country' => 'USA',
+        'Language_Code' => 'eng',
         'Source' => 'rspec',
         'Status' => 'Active',
         'Source_Details' => 'foo123',
@@ -67,6 +79,7 @@ describe SalsaLabs::SalsaObjectsSaver do
         'Tracking_Code' => 'abc123',
         'object' => 'supporter',
         'key' => '31337',
+        'text' => 'asdf',
         'some_custom_field' => 'foo'
       }
     end
