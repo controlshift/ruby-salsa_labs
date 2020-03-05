@@ -11,8 +11,16 @@ module SalsaLabs
     def save(data)
       parameters = SalsaLabs::ApiObjectParameterList.new(data)
       filtered_params = parameters.attributes.delete_if { |key, value| ['Date_Created', 'Last_Modified'].include?(key) }
+
+      # 'object' must go first, followed by 'key' if it exists
+      ordered_params = {'object' => filtered_params.delete('object')}
+      key = filtered_params.delete('key')
+      unless key.nil?
+        ordered_params['key'] = key
+      end
+      ordered_params.merge!(filtered_params)
         
-      response = parse_response(api_call(filtered_params))
+      response = parse_response(api_call(ordered_params))
 
       if response.css('success')
         return response.css('success').attribute('key').value.to_i

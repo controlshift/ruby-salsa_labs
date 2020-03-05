@@ -14,6 +14,7 @@ describe SalsaLabs::SalsaObjectsSaver do
     let(:attributes) do
       {
         'supporter_key' => '31337',
+        'key' => '31337',
         'organization_key' => '1234',
         'chapter_key' => '90210',
         'title' => 'Mr.',
@@ -36,7 +37,8 @@ describe SalsaLabs::SalsaObjectsSaver do
         'source_tracking_code' => 'foo123',
         'tracking_code' => 'abc123',
         'date_created' => 'Fri Mar 14 2014 14:07:29 GMT-0400 (EDT)',
-        'last_modified' => 'Fri Mar 14 2014 13:54:10 GMT-0400 (EDT)'
+        'last_modified' => 'Fri Mar 14 2014 13:54:10 GMT-0400 (EDT)',
+        'some_custom_field' => 'foo'
       }
     end
     let(:supporter) { SalsaLabs::Supporter.new(attributes) }
@@ -64,7 +66,9 @@ describe SalsaLabs::SalsaObjectsSaver do
         'Source_Details' => 'foo123',
         'Source_Tracking_Code' => 'foo123',
         'Tracking_Code' => 'abc123',
-        'object' => 'supporter'
+        'object' => 'supporter',
+        'key' => '31337',
+        'some_custom_field' => 'foo'
       }
     end
     let(:api_response) do
@@ -76,7 +80,14 @@ describe SalsaLabs::SalsaObjectsSaver do
     end
 
     it 'should call the API, stripping out Last_Modified and Date_Created' do
-      expect(api_client).to receive(:post).with('/save', expected_data).and_return(api_response)
+      expect(api_client).to receive(:post) do |endpoint, params|
+        expect(endpoint).to eq '/save'
+        expect(params).to eq expected_data
+
+        # 'object' and 'key' fields must come first
+        expect(params.keys.first).to eq 'object'
+        expect(params.keys[1]).to eq 'key'
+      end.and_return(api_response)
 
       subject.save(supporter.attributes.update({'object' => 'supporter'}))
     end
