@@ -70,8 +70,7 @@ module SalsaLabs
           faraday.response :logger if ENV['DEBUG']
         end
         
-        # not available until faraday 0.9
-        #Faraday::Utils.default_params_encoder = Faraday::FlatParamsEncoder #do not nest repeated parameters
+        Faraday::Utils.default_params_encoder = Faraday::FlatParamsEncoder #do not nest repeated parameters
         faraday.adapter Faraday.default_adapter
       end
     end
@@ -88,11 +87,14 @@ module SalsaLabs
     end
 
     def perform_post_request(endpoint, params)
+      # Tell Salsa we want the response back as XML
+      params.update({'xml'=>true})
+
       response = connection.post do |request|
         request.headers['cookie'] = authentication_cookie.to_s
-        params.update({'xml'=>true}) #tell Salsa we want the response back as XML
 
-        request.url(endpoint, params)
+        # Convert the params to array format, so that Faraday will preserve the order of params
+        request.url(endpoint, params.to_a)
       end
 
       raise_if_error!(response)

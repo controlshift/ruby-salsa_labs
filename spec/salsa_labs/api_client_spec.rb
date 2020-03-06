@@ -58,6 +58,22 @@ describe SalsaLabs::ApiClient do
     end
   end
 
+  describe '#post' do
+    before :each do
+      allow(api_client).to receive(:authenticated?).and_return(true)
+    end
+
+    it 'should convert hash parameters to array parameters to Faraday, preserving order' do
+      # Q: Why aren't we using Webmock or something for this?
+      # A: Webmock doesn't care about parameter order, so it won't perform this test correctly
+      request = double(body: '', headers: {})
+      expect_any_instance_of(Faraday::Connection).to receive(:post).and_yield(request).and_return(request)
+      expect(request).to receive(:url).with('/foo', [['b', 1], ['a', 2], ['c', 3], ['xml', true]])
+
+      api_client.post('/foo', {'b' => 1, 'a' => 2, 'c' => 3})
+    end
+  end
+
   describe "#fetch" do
     it "returns actions from the Salsa Labs API" do
 
