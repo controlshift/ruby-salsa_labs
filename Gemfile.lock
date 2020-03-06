@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    salsa_labs (0.1.1)
+    salsa_labs (0.1.2)
       activesupport (>= 1.0)
       faraday (~> 0.9)
       httparty (>= 0.10)
