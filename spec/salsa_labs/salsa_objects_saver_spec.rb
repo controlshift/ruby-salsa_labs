@@ -46,7 +46,8 @@ describe SalsaLabs::SalsaObjectsSaver do
         'salsa_deleted' => false,
         'salsa_deleted_boolvalue' => false,
         'text' => 'asdf',
-        'some_custom_field' => 'foo'
+        'some_custom_field' => 'foo',
+        'password' => 'super_sekrit'
       }
     end
     let(:supporter) { SalsaLabs::Supporter.new(attributes) }

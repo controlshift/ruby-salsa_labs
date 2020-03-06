@@ -6,6 +6,7 @@ module SalsaLabs
     PARAMS_TO_SKIP = ['Date_Created',  # Not allowed to be changed
                       'Last_Modified',  # Not allowed to be changed
                       'organization_KEY',  # Comes from authorization, but not something we ever set
+                      'Password',  # We're not trying to update anyone's password
                       'salsa_deleted',  # Reserved field, should not be modified
                       'salesforce_id'  # Reserved field, should not be modified
     ].freeze
