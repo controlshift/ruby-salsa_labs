@@ -70,8 +70,7 @@ module SalsaLabs
           faraday.response :logger if ENV['DEBUG']
         end
         
-        # not available until faraday 0.9
-        #Faraday::Utils.default_params_encoder = Faraday::FlatParamsEncoder #do not nest repeated parameters
+        Faraday::Utils.default_params_encoder = Faraday::FlatParamsEncoder #do not nest repeated parameters
         faraday.adapter Faraday.default_adapter
       end
     end
