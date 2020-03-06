@@ -90,12 +90,13 @@ module SalsaLabs
       # Tell Salsa we want the response back as XML
       params.update({'xml'=>true})
 
-      response = connection.post do |request|
-        request.headers['cookie'] = authentication_cookie.to_s
-
-        # Convert the params to array format, so that Faraday will preserve the order of params
-        request.url(endpoint, params.to_a)
-      end
+      # We need the parameters to stay in the same order as the hash keys, so we're using Net::HTTP
+      # directly to construct this request, instead of using Faraday, because Faraday always alphabetizes
+      # the parameters.
+      uri = URI("#{@api_url}/#{endpoint}?#{Faraday::FlatParamsEncoder.encode(params.to_a)}")
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+      response = http.post(uri, nil, 'cookie' => authentication_cookie.to_s)
 
       raise_if_error!(response)
 
