@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'simplecov'
 SimpleCov.start
 
@@ -9,7 +11,7 @@ require 'webmock'
 WebMock.disable_net_connect!
 
 RSpec.configure do |config|
-  config.filter_run_excluding :integration => true
+  config.filter_run_excluding integration: true
 end
 
 VCR.configure do |c|

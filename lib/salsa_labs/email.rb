@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SalsaLabs
   ##
   # Action represents a single instance of a member action in
@@ -11,7 +13,6 @@ module SalsaLabs
     def self.fetch(filter_parameters = {}, credentials = {})
       EmailsFetcher.new(filter_parameters, credentials).fetch
     end
-
   end
 
   ##

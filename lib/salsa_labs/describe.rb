@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SalsaLabs
   class Describe
     attr_accessor :client
@@ -7,8 +9,7 @@ module SalsaLabs
     end
 
     def describe(object)
-
-      ActiveSupport::JSON.decode(@client.fetch("/api/describe2.sjs", json: true, object: object))
+      ActiveSupport::JSON.decode(@client.fetch('/api/describe2.sjs', json: true, object: object))
     end
   end
 end

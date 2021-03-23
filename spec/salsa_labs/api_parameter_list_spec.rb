@@ -1,31 +1,32 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'vcr'
 
 describe SalsaLabs::ApiObjectParameterList do
-
   let(:api_parameters) do
-    #non capitalized parameter names
+    # non capitalized parameter names
     SalsaLabs::ApiObjectParameterList.new({
-      'key' => '1234',
-      'uid' => '',
-      'object' => 'supporter',
-      'tag' => 'a_tag',
-      'supporter_key' => '1234',
-      'organization_key' => '90210',
-      'title' => 'Mr.',
-      'first_name' => 'John',
-      'mi' => 'Jacob',
-      'last_name' => 'Jingleheimer Schmidt',
-      'suffix' => 'IV',
-      'zip' => '12345',
-      'private_zip_plus_4' => '0000',
-      'custom_field_123' => '456'
-    })
+                                            'key' => '1234',
+                                            'uid' => '',
+                                            'object' => 'supporter',
+                                            'tag' => 'a_tag',
+                                            'supporter_key' => '1234',
+                                            'organization_key' => '90210',
+                                            'title' => 'Mr.',
+                                            'first_name' => 'John',
+                                            'mi' => 'Jacob',
+                                            'last_name' => 'Jingleheimer Schmidt',
+                                            'suffix' => 'IV',
+                                            'zip' => '12345',
+                                            'private_zip_plus_4' => '0000',
+                                            'custom_field_123' => '456'
+                                          })
   end
 
-  describe "#capitalize" do
-    it "properly capitalizes attributes" do
-      #not capitalized
+  describe '#capitalize' do
+    it 'properly capitalizes attributes' do
+      # not capitalized
       expect(api_parameters.attributes).to include('key')
       expect(api_parameters.attributes['key']).to eq('1234')
       expect(api_parameters.attributes).to include('object')
@@ -37,21 +38,21 @@ describe SalsaLabs::ApiObjectParameterList do
       expect(api_parameters.attributes).to include('custom_field_123')
       expect(api_parameters.attributes['custom_field_123']).to eq('456')
 
-      #ends with _KEY
+      # ends with _KEY
       expect(api_parameters.attributes).to include('supporter_KEY')
       expect(api_parameters.attributes['supporter_KEY']).to eq('1234')
       expect(api_parameters.attributes).to include('organization_KEY')
       expect(api_parameters.attributes['organization_KEY']).to eq('90210')
 
-      #starts with PRIVATE_
+      # starts with PRIVATE_
       expect(api_parameters.attributes).to include('PRIVATE_Zip_Plus_4')
       expect(api_parameters.attributes['PRIVATE_Zip_Plus_4']).to eq('0000')
 
-      #all caps
+      # all caps
       expect(api_parameters.attributes).to include('MI')
       expect(api_parameters.attributes['MI']).to eq('Jacob')
 
-      #normally capitalized
+      # normally capitalized
       expect(api_parameters.attributes).to include('Title')
       expect(api_parameters.attributes['Title']).to eq('Mr.')
       expect(api_parameters.attributes).to include('First_Name')
@@ -63,12 +64,11 @@ describe SalsaLabs::ApiObjectParameterList do
       expect(api_parameters.attributes).to include('Zip')
       expect(api_parameters.attributes['Zip']).to eq('12345')
 
-      #negative tests
+      # negative tests
       expect(api_parameters.attributes).to_not include('supporter_key')
       expect(api_parameters.attributes).to_not include('private_zip_plus_4')
       expect(api_parameters.attributes).to_not include('mi')
       expect(api_parameters.attributes).to_not include('title')
     end
   end
-
 end

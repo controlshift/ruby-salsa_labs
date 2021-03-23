@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SalsaLabs
   ##
   # Action represents a single instance of a member action in

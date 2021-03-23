@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SalsaLabs
   ##
   # Supporter represents a single member in the Salsa Labs CRM.
@@ -17,29 +19,30 @@ module SalsaLabs
       SupportersFetcher.new(filter_parameters, credentials).fetch
     end
 
-    def self.tagged(tag, filter_parameters={}, credentials = {})
+    def self.tagged(tag, filter_parameters = {}, _credentials = {})
       SupportersFetcher.new(filter_parameters).tagged(tag)
     end
 
     def supporter_actions(credentials)
-      supporter_actions_fetch = SalsaLabs::SupporterActionsFetcher.new({'supporter_KEY' => self.supporter_key}, credentials)
+      supporter_actions_fetch = SalsaLabs::SupporterActionsFetcher.new({ 'supporter_KEY' => supporter_key },
+                                                                       credentials)
       supporter_actions_fetch.fetch
     end
 
     def emails(credentials)
-      emails_fetch = SalsaLabs::EmailsFetcher.new({'supporter_KEY' => self.supporter_key}, credentials)
+      emails_fetch = SalsaLabs::EmailsFetcher.new({ 'supporter_KEY' => supporter_key }, credentials)
       emails_fetch.fetch
     end
 
     def tracking_info_blank?
-      (self.source_details.blank? && self.source_tracking_code.blank?) || (self.source_details =~ /No Referring info/ &&  self.source_tracking_code =~ /No Original Source/)
+      (source_details.blank? && source_tracking_code.blank?) || (source_details =~ /No Referring info/ && source_tracking_code =~ /No Original Source/)
     end
   end
 
   ##
   # SupportersFetcher is a service object to pull back a collection of supporters from the Salsa Labs API.
   ##
-  class SupportersFetcher < SalsaObjectsFetcher 
+  class SupportersFetcher < SalsaObjectsFetcher
     def initialize(filter_parameters = {}, credentials = {})
       super(filter_parameters, credentials)
       @object_class = SalsaLabs::Supporter

@@ -1,10 +1,11 @@
+# frozen_string_literal: true
+
 module SalsaLabs
   ##
   # Base class used for subclasses that can be represented by Salsa Labs
   # concepts that can be returned by getObject or getObjects.
   ##
   class SalsaObject
-
     attr_reader :attributes
 
     def initialize(params)
@@ -25,19 +26,19 @@ module SalsaLabs
     end
 
     def object_key
-      object_name+'_key'
+      "#{object_name}_key"
     end
 
     def save(credentials = {})
-      new_id = saver(credentials).save(self.attributes.update({'object'=>object_name}))
-      self.attributes.update({'key'=>new_id})
-      self.attributes.update({object_key => new_id})
+      new_id = saver(credentials).save(attributes.update({ 'object' => object_name }))
+      attributes.update({ 'key' => new_id })
+      attributes.update({ object_key => new_id })
     end
 
     def tag(tag, credentials = {})
-      params = {'object'=>object_name,
-                'key'=>self.attributes['key'],
-                'tag'=>tag}
+      params = { 'object' => object_name,
+                 'key' => attributes['key'],
+                 'tag' => tag }
       saver(credentials).save(params)
     end
 
@@ -47,7 +48,7 @@ module SalsaLabs
 
     def self.integer_attributes(*methods)
       methods.each do |method|
-        define_method("#{method}=") do | value |
+        define_method("#{method}=") do |value|
           attributes[method.to_s] = value
         end
 
@@ -59,7 +60,7 @@ module SalsaLabs
 
     def self.string_attributes(*methods)
       methods.each do |method|
-        define_method("#{method}=") do | value |
+        define_method("#{method}=") do |value|
           attributes[method.to_s] = value
         end
 
@@ -71,7 +72,7 @@ module SalsaLabs
 
     def self.boolean_attributes(*methods)
       methods.each do |method|
-        define_method("#{method}=") do | value |
+        define_method("#{method}=") do |value|
           attributes[method.to_s] = value
         end
 
@@ -83,16 +84,12 @@ module SalsaLabs
 
     def self.datetime_attributes(*methods)
       methods.each do |method|
-        define_method("#{method}=") do | value |
+        define_method("#{method}=") do |value|
           attributes[method.to_s] = value
         end
 
         define_method(method) do
-          if attributes[method.to_s].present?
-            DateTime.parse(attributes[method.to_s])
-          else
-            nil
-          end
+          DateTime.parse(attributes[method.to_s]) if attributes[method.to_s].present?
         end
       end
     end

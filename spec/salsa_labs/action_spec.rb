@@ -1,7 +1,8 @@
-require "spec_helper"
+# frozen_string_literal: true
+
+require 'spec_helper'
 
 describe SalsaLabs::Action do
-
   let(:attributes) do
     {
       'action_key' => '1234',
@@ -14,54 +15,53 @@ describe SalsaLabs::Action do
 
   let(:action) { SalsaLabs::Action.new(attributes) }
 
-  describe "#action_key" do
-    it "returns the action_key attribute as an integer" do
+  describe '#action_key' do
+    it 'returns the action_key attribute as an integer' do
       expect(action.action_key).to eq(1234)
     end
   end
 
-  describe "#attributes" do
-    it "returns the attributes hash passed in to initialize" do
+  describe '#attributes' do
+    it 'returns the attributes hash passed in to initialize' do
       expect(action.attributes).to eq(attributes)
     end
   end
 
-  describe "#description" do
-    it "returns the description attribute" do
+  describe '#description' do
+    it 'returns the description attribute' do
       expect(action.description).to eq('Lengthy Description')
     end
   end
 
-  describe "#organization_key" do
-    it "returns the organization_key attribute as an integer" do
-      expect(action.organization_key).to eq(90210)
+  describe '#organization_key' do
+    it 'returns the organization_key attribute as an integer' do
+      expect(action.organization_key).to eq(90_210)
     end
   end
 
-  describe "#reference_name" do
-    it "returns the reference_name attribute" do
+  describe '#reference_name' do
+    it 'returns the reference_name attribute' do
       expect(action.reference_name).to eq('A Good Reference')
     end
   end
 
-  describe "#title" do
-    it "returns the title as an attribute" do
+  describe '#title' do
+    it 'returns the title as an attribute' do
       expect(action.title).to eq('A Distinguished Title')
     end
   end
 
-  describe ".fetch" do
+  describe '.fetch' do
     let(:actions_fetcher) { double('ActionsFetcher', fetch: []) }
 
     before(:each) do
       allow(SalsaLabs::ActionsFetcher).to receive(:new).and_return(actions_fetcher)
     end
 
-    it "calls .fetch on an SalsaLabs::ActionsFetcher object" do
+    it 'calls .fetch on an SalsaLabs::ActionsFetcher object' do
       SalsaLabs::Action.fetch
 
       expect(actions_fetcher).to have_received(:fetch)
     end
   end
-
 end

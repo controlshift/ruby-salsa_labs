@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SalsaLabs
   ##
   # Action represents a single instance of a member action in
@@ -11,13 +13,12 @@ module SalsaLabs
     def self.fetch(filter_parameters = {}, credentials = {})
       ActionsFetcher.new(filter_parameters, credentials).fetch
     end
-
   end
 
   ##
   # ActionsFetcher is a service object to pull back a collection of actions from the Salsa Labs API.
   ##
-  class ActionsFetcher < SalsaObjectsFetcher 
+  class ActionsFetcher < SalsaObjectsFetcher
     def initialize(filter_parameters = {}, credentials = {})
       super(filter_parameters, credentials)
       @object_class = SalsaLabs::Action

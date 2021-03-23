@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe SalsaLabs::SalsaObjectsSaver do
@@ -86,9 +88,9 @@ describe SalsaLabs::SalsaObjectsSaver do
     end
     let(:api_response) do
       <<~XML
-      <data>
-        <success key="123">You did it!</success>
-      </data>
+        <data>
+          <success key="123">You did it!</success>
+        </data>
       XML
     end
 
@@ -102,7 +104,7 @@ describe SalsaLabs::SalsaObjectsSaver do
         expect(params.keys[1]).to eq 'key'
       end.and_return(api_response)
 
-      subject.save(supporter.attributes.update({'object' => 'supporter'}))
+      subject.save(supporter.attributes.update({ 'object' => 'supporter' }))
     end
   end
 end

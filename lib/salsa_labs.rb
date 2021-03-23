@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'faraday'
 require 'nokogiri'
 
@@ -17,11 +19,9 @@ require 'active_support/core_ext/string'
 require 'active_support/json'
 
 module SalsaLabs
-
   ##
   # Exception class for API-related errors.
   ##
   class Error < StandardError
   end
-
 end
